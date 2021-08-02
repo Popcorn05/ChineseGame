@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChineseGame"
         mc:Ignorable="d"
-        Title="Editor" Height="450" Width="800"> <!-- Keeping height and width at default as window reacts to size change -->
+        Title="Editor" Height="800" Width="700"> <!-- Keeping height and width at default as window reacts to size change -->
 
     <!-- Main layout -->
     <!-- Everything kept in grid so that margins automatically adjust -->
@@ -14,21 +14,54 @@
         <!-- Setup body grid -->
         <!-- Setup auto adjust columns -->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition Width="6*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="0.5*"/>
         </Grid.ColumnDefinitions>
         <!-- Setup auto adjust columns -->
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1.5*"/>
             <RowDefinition Height="6*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="4.5*"/>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         
         <!-- Content -->
-        <!-- Held inside another grid so that everything adjusts with main body grid margins -->
-        <Grid Grid.Column="1" Grid.Row="1">
-            <Button Content="Button" Grid.Column="1" Grid.Row="1" Style="{StaticResource EditorButton}"/>
+        <!-- Titles -->
+        <Grid Grid.Row="1" Grid.Column="1">
+            <!-- Grid definitions -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Worksheet title inputs -->
+            <!-- Labels -->
+            <Label Name="WorksheetTitleLabel" Content="Worksheet Title:" Grid.Column="0" Grid.Row="0" Style="{StaticResource EditorHeading}"/>
+            <Label Name="WorksheetTitleChineseLabel" Content="Worksheet Title (Chinese):" Grid.Column="0" Grid.Row="1" Style="{StaticResource EditorHeading}"/>
+            <!-- Inputs -->
+            <Grid Grid.Column="1" Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.1*"/>
+                    <RowDefinition Height="0.8*"/>
+                    <RowDefinition Height="0.1*"/>
+                </Grid.RowDefinitions>
+                <TextBox Name="WorksheetTitleInput" Grid.Row="1" FontSize="16" FontFamily="Microsoft YaHei" VerticalContentAlignment="Center"/>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.1*"/>
+                    <RowDefinition Height="0.8*"/>
+                    <RowDefinition Height="0.1*"/>
+                </Grid.RowDefinitions>
+                <TextBox Name="WorksheetTitleChineseInput" Grid.Row="1" FontSize="16" FontFamily="Microsoft YaHei" VerticalContentAlignment="Center"/>
+            </Grid>
         </Grid>
     </Grid>
     
