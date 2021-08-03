@@ -24,7 +24,7 @@
             <RowDefinition Height="1.5*"/>
             <RowDefinition Height="6*"/>
             <RowDefinition Height="4.5*"/>
-            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         
@@ -46,13 +46,15 @@
             <Label Name="WorksheetTitleLabel" Content="Worksheet Title:" Grid.Column="0" Grid.Row="0" Style="{StaticResource EditorHeading}"/>
             <Label Name="WorksheetTitleChineseLabel" Content="Worksheet Title (Chinese):" Grid.Column="0" Grid.Row="1" Style="{StaticResource EditorHeading}"/>
             <!-- Inputs -->
+            <!-- Put inside of small grids with single column so that textbox height can adjust to change in window size -->
+            <!-- Haven't figured out how to make textboxes themselves have adjustable height so this is my only option for now -->
             <Grid Grid.Column="1" Grid.Row="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.1*"/>
                     <RowDefinition Height="0.8*"/>
                     <RowDefinition Height="0.1*"/>
                 </Grid.RowDefinitions>
-                <TextBox Name="WorksheetTitleInput" Grid.Row="1" FontSize="16" FontFamily="Microsoft YaHei" VerticalContentAlignment="Center"/>
+                <TextBox Name="WorksheetTitleInput" Grid.Row="1" TextChanged="UpdateTitles" Style="{StaticResource EditorTextBox}"/>
             </Grid>
             <Grid Grid.Column="1" Grid.Row="1">
                 <Grid.RowDefinitions>
@@ -60,7 +62,7 @@
                     <RowDefinition Height="0.8*"/>
                     <RowDefinition Height="0.1*"/>
                 </Grid.RowDefinitions>
-                <TextBox Name="WorksheetTitleChineseInput" Grid.Row="1" FontSize="16" FontFamily="Microsoft YaHei" VerticalContentAlignment="Center"/>
+                <TextBox Name="WorksheetTitleChineseInput" Grid.Row="1" TextChanged="UpdateTitles" Style="{StaticResource EditorTextBox}"/>
             </Grid>
         </Grid>
     </Grid>

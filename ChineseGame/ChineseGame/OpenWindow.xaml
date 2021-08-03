@@ -12,9 +12,9 @@
         <!-- Setup body grid -->
         <!-- Setup auto adjust columns -->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1.5*"/>
             <ColumnDefinition Width="6*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1.5*"/>
         </Grid.ColumnDefinitions>
         <!-- Setup auto adjust columns -->
         <Grid.RowDefinitions>
@@ -30,8 +30,8 @@
         
         <!-- Main content -->
         <!-- Heading -->
-        <Label Name="OpenHeadingTop" Content="Chinese Worksheet" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Style="{StaticResource EditorHeading}"/>
-        <Label Name="OpenHeadingBottom" Content="Creator" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" Style="{StaticResource EditorHeading}"/>
+        <Label Name="OpenHeadingTop" Content="Chinese Worksheet" Grid.Column="1" Grid.Row="1" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Style="{StaticResource EditorHeading}"/>
+        <Label Name="OpenHeadingBottom" Content="Creator" Grid.Column="1" Grid.Row="2" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Style="{StaticResource EditorHeading}"/>
         <!-- Buttons -->
         <Button Name="NewButton" Content="New" Grid.Column="1" Grid.Row="4" Style="{StaticResource EditorButton}" Click="NewButton_Click"/>
         <Button Name="LoadButton" Content="Load" Grid.Column="1" Grid.Row="6" Style="{StaticResource EditorButton}" Click="LoadButton_Click"/>
