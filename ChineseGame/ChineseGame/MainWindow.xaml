@@ -6,11 +6,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChineseGame"
         mc:Ignorable="d"
-        Title="Editor" Height="800" Width="700"> <!-- Keeping height and width at default as window reacts to size change -->
+        Title="Editor" Height="800" Width="700">
+    <!-- Keeping height and width at default as window reacts to size change -->
 
     <!-- Main layout -->
     <!-- Everything kept in grid so that margins automatically adjust -->
-    <Grid>
+    <Grid Name="BodyGrid">
         <!-- Setup body grid -->
         <!-- Setup auto adjust columns -->
         <Grid.ColumnDefinitions>
@@ -22,13 +23,15 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1.5*"/>
-            <RowDefinition Height="6*"/>
+            <RowDefinition Height="6.5*"/>
+            <RowDefinition Height="1.5*"/>
             <RowDefinition Height="4.5*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        
+
         <!-- Content -->
+
         <!-- Titles -->
         <Grid Grid.Row="1" Grid.Column="1">
             <!-- Grid definitions -->
@@ -40,7 +43,7 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            
+
             <!-- Worksheet title inputs -->
             <!-- Labels -->
             <Label Name="WorksheetTitleLabel" Content="Worksheet Title:" Grid.Column="0" Grid.Row="0" Style="{StaticResource EditorHeading}"/>
@@ -65,6 +68,11 @@
                 <TextBox Name="WorksheetTitleChineseInput" Grid.Row="1" TextChanged="UpdateTitles" Style="{StaticResource EditorTextBox}"/>
             </Grid>
         </Grid>
+
+        <!-- Preview Grid, Slider and Generate Button -->
+        <Slider Grid.Column="1" Grid.Row="4" Width="200" LargeChange="1" Minimum="6" Maximum="10" ValueChanged="UpdateSlider" SmallChange="1" Value="6" VerticalAlignment="Top" IsSnapToTickEnabled="True"/>
+        <Label Name="TestLabel"  Content="6" Grid.Column="1" Grid.Row="5"/>
+
     </Grid>
-    
+
 </Window>
