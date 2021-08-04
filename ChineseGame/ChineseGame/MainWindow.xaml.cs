@@ -51,17 +51,20 @@ namespace ChineseGame
             PreviewGrid.HorizontalAlignment = HorizontalAlignment.Center;
             PreviewGrid.VerticalAlignment = VerticalAlignment.Center;
 
-            //Add to body grid
-            BodyGrid.Children.Add(PreviewGrid);
-            Grid.SetColumn(PreviewGrid, 1);
-            Grid.SetRow(PreviewGrid, 2);
-
             //Grid border
             GridBorder = new Border();
             GridBorder.BorderBrush = Brushes.Black;
-            GridBorder.BorderThickness = new Thickness(2);
+            GridBorder.BorderThickness = new Thickness(4);
+            GridBorder.Width = GridSizePixels;
+            GridBorder.Height = GridSizePixels;
+            GridBorder.Child = PreviewGrid;
 
             GridBorders = new List<Border>();
+
+            //Add to body grid
+            BodyGrid.Children.Add(GridBorder);
+            Grid.SetColumn(GridBorder, 1);
+            Grid.SetRow(GridBorder, 2);
 
             //Update grid size
             UpdateGridSize();
@@ -111,7 +114,7 @@ namespace ChineseGame
             {
                 for (int x = 0; x < GridSize; x++)
                 {
-                    GridBorders.Add(new Border { BorderBrush = GridBorder.BorderBrush, BorderThickness = GridBorder.BorderThickness });
+                    GridBorders.Add(new Border { BorderBrush = GridBorder.BorderBrush, BorderThickness = new Thickness(2) });
                     PreviewGrid.Children.Add(GridBorders[i]);
                     Grid.SetColumn(GridBorders[i], x);
                     Grid.SetRow(GridBorders[i], y);
