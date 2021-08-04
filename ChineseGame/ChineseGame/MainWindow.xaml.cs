@@ -30,8 +30,10 @@ namespace ChineseGame
         private int GridSize = 6;
         private string[,] GridData;
         private bool GridGenned = false;
-        const double GridSizePixels = 350.0;
-        Grid PreviewGrid;
+        const double GridSizePixels = 275.0;
+        private Grid PreviewGrid;
+        private Border GridBorder;
+        private List<Border> GridBorders;
         //Word data
         private List<string[]> WordData;
         private int MaxWords;
@@ -45,13 +47,21 @@ namespace ChineseGame
             //Create start grid
             PreviewGrid = new Grid();
 
-            //Add style
-            PreviewGrid.Style = (Style)Resources["PreviewGridStyling"];
+            //Add styles
+            PreviewGrid.HorizontalAlignment = HorizontalAlignment.Center;
+            PreviewGrid.VerticalAlignment = VerticalAlignment.Center;
 
             //Add to body grid
             BodyGrid.Children.Add(PreviewGrid);
             Grid.SetColumn(PreviewGrid, 1);
             Grid.SetRow(PreviewGrid, 2);
+
+            //Grid border
+            GridBorder = new Border();
+            GridBorder.BorderBrush = Brushes.Black;
+            GridBorder.BorderThickness = new Thickness(2);
+
+            GridBorders = new List<Border>();
 
             //Update grid size
             UpdateGridSize();
@@ -80,23 +90,47 @@ namespace ChineseGame
             PreviewGrid.RowDefinitions.Clear();
             PreviewGrid.ColumnDefinitions.Clear();
 
+            GridBorders.Clear();
+
             //Add rows and columns
             RowDefinition PreviewRow = new RowDefinition();
             PreviewRow.Height = new GridLength(Math.Round(GridSizePixels / GridSize));
             ColumnDefinition PreviewColumn = new ColumnDefinition();
             PreviewColumn.Width = new GridLength(Math.Round(GridSizePixels / GridSize));
 
-            for (int i = 0; i < GridSize; i++)
+            //Loop through to add rows and columns
+            for (int p = 0; p < GridSize; p++)
             {
                 PreviewGrid.RowDefinitions.Add(new RowDefinition() { Height = PreviewRow.Height });
                 PreviewGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = PreviewColumn.Width });
+            }
+
+            //Loop through and add borders
+            int i = 0;
+            for (int y = 0; y < GridSize; y++)
+            {
+                for (int x = 0; x < GridSize; x++)
+                {
+                    GridBorders.Add(new Border { BorderBrush = GridBorder.BorderBrush, BorderThickness = GridBorder.BorderThickness });
+                    PreviewGrid.Children.Add(GridBorders[i]);
+                    Grid.SetColumn(GridBorders[i], x);
+                    Grid.SetRow(GridBorders[i], y);
+                    i++;
+                }
             }
         }
 
         //Update grid size overload for form elements
         public void UpdateSlider(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            //Change grid size
             GridSize = (int)e.NewValue;
+            TestLabel.Content = GridSize;
+            //Only run update grid if preview grid exists
+            if (PreviewGrid != null)
+            {
+                UpdateGridSize();
+            }
         }
     }
 }
