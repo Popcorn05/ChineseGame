@@ -50,8 +50,8 @@
                 </Grid.RowDefinitions>
 
                 <!-- File Format Content -->
-                <RadioButton Name="AsProjectRadioButton" Content="As Project" Grid.Column="1" Grid.Row="1" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <RadioButton Name="ToExportRadioButton" Content="To Export" Grid.Column="1" Grid.Row="3" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <RadioButton Name="AsProjectRadioButton" Content="As Project" Grid.Column="1" Grid.Row="1" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                <RadioButton Name="ToExportRadioButton" Content="To Export" Grid.Column="1" Grid.Row="3" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
             </Grid>
         </Border>
 
