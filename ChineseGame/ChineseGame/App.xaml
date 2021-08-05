@@ -17,6 +17,12 @@
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
+        <!-- Stling for smaller labels in editor -->
+        <Style TargetType="Label" x:Key="EditorLabel">
+            <Setter Property="FontFamily" Value="Microsoft YaHei"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
         <!-- Styling for text boxes -->
         <Style TargetType="TextBox" x:Key="EditorTextBox">
             <Setter Property="FontFamily" Value="Microsoft YaHei"/>

@@ -70,8 +70,22 @@
         </Grid>
 
         <!-- Preview Grid, Slider and Generate Button -->
-        <Label Name="TestLabel"  Content="6" Grid.Column="1" Grid.Row="5"/>
-        <Slider Grid.Column="1" Grid.Row="3" Width="200" LargeChange="1" Minimum="6" Maximum="10" ValueChanged="UpdateSlider" SmallChange="1" Value="6" VerticalAlignment="Top" IsSnapToTickEnabled="True"/>
+        <!-- Grid for holding in place -->
+        <Grid Name="PreviewInfoGrid" Grid.Column="1" Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Have to define label before slider because on init slider references label -->
+            <Label Name="TestLabel"  Content="Grid Size: 6" Grid.Column="0" Style="{StaticResource EditorLabel}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,70,0"/>
+
+            <!-- Slider -->
+            <Slider Grid.Column="0" Width="150" LargeChange="1" Minimum="6" Maximum="10" ValueChanged="UpdateSlider" SmallChange="1" Value="6" VerticalAlignment="Top" HorizontalAlignment="Right" IsSnapToTickEnabled="True"/>
+            
+            <!-- Button -->
+            <Button Name="GenerateButton" Content="Generate" Grid.Column="1" Width="90" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,0,0,0"/>
+        </Grid>
     </Grid>
 
 </Window>

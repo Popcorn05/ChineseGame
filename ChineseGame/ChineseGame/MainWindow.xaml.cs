@@ -128,7 +128,7 @@ namespace ChineseGame
         {
             //Change grid size
             GridSize = (int)e.NewValue;
-            TestLabel.Content = GridSize;
+            TestLabel.Content = "Grid Size: " + GridSize.ToString();
             //Only run update grid if preview grid exists
             if (PreviewGrid != null)
             {
