@@ -36,6 +36,7 @@ namespace ChineseGame
         private List<Border> GridBorders;
         //Word data
         private List<string[]> WordData;
+        private List<TextBox[]> WordDataObjects;
         private int MaxWords;
 
         //Constructor
@@ -68,6 +69,12 @@ namespace ChineseGame
 
             //Update grid size
             UpdateGridSize();
+
+            WordData = new List<string[]>();
+            WordDataObjects = new List<TextBox[]>();
+
+            //Word data first row
+            AddWordDataRow();
         }
 
         //INPUTS-----------------------------------------------
@@ -92,7 +99,7 @@ namespace ChineseGame
             //Clear current
             PreviewGrid.RowDefinitions.Clear();
             PreviewGrid.ColumnDefinitions.Clear();
-
+            PreviewGrid.Children.Clear();
             GridBorders.Clear();
 
             //Add rows and columns
@@ -133,6 +140,34 @@ namespace ChineseGame
             if (PreviewGrid != null)
             {
                 UpdateGridSize();
+            }
+        }
+
+        //Update word data grid
+        public void WordDataUpdate(object sender, TextChangedEventArgs e)
+        {
+            //Get current row num
+            int WordRowNum = WordDataObjects.Count;
+
+            //If any textbox is filled
+            if (WordDataObjects[WordRowNum-1][0].Text != "" || WordDataObjects[WordRowNum - 1][1].Text != "" || WordDataObjects[WordRowNum - 1][2].Text != "")
+            {
+                AddWordDataRow();
+            }
+        }
+
+        //Add row to word data grid
+        public void AddWordDataRow()
+        {
+            WordDataGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(40.0) });
+            WordDataObjects.Add(new TextBox[] { new TextBox(), new TextBox(), new TextBox() });
+            int WordRowNum = WordDataObjects.Count;
+            for (int i = 0; i < 3; i++)
+            {
+                WordDataObjects[WordRowNum - 1][i].TextChanged += new TextChangedEventHandler(WordDataUpdate);
+                WordDataGrid.Children.Add(WordDataObjects[WordRowNum-1][i]);
+                Grid.SetColumn(WordDataObjects[WordRowNum - 1][i], i);
+                Grid.SetRow(WordDataObjects[WordRowNum-1][i],WordRowNum-1);
             }
         }
     }
