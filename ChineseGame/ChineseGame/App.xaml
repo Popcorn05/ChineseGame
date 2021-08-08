@@ -2,7 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ChineseGame"
-             StartupUri="SaveWindow.xaml">
+             StartupUri="OpenWindow.xaml">
     <Application.Resources>
         <!-- Styling and stuff (similar to <head> in html) -->
         <!-- Styling for most buttons in editor -->
@@ -17,11 +17,20 @@
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
+        <!-- Stling for smaller labels in editor -->
+        <Style TargetType="Label" x:Key="EditorLabel">
+            <Setter Property="FontFamily" Value="Microsoft YaHei"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
         <!-- Styling for text boxes -->
         <Style TargetType="TextBox" x:Key="EditorTextBox">
             <Setter Property="FontFamily" Value="Microsoft YaHei"/>
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <!-- Styling for textboxes in word data -->
+        <Style TargetType="TextBox" x:Key="WordDataTextBox">
         </Style>
     </Application.Resources>
 </Application>
