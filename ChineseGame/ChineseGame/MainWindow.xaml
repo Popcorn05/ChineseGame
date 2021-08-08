@@ -102,7 +102,7 @@
         </Border>
         
         <!-- Save button -->
-        <Button Name="SaveButton" Content="Save" Grid.Column="1" Grid.Row="5" Width="90" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        <Button Name="SaveButton" Content="Save" Grid.Column="1" Grid.Row="5" Width="90" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" Click="SaveButtonClick"/>
     </Grid>
 
 </Window>
