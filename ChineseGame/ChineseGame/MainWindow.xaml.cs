@@ -156,6 +156,7 @@ namespace ChineseGame
             if (WordDataObjects[WordRowNum-1][0].Text != "" || WordDataObjects[WordRowNum-1][1].Text != "" || WordDataObjects[WordRowNum-1][2].Text != "")
             {
                 AddWordDataRow();
+                WordDataButtons[WordRowNum - 1].IsEnabled = true;
             }
         }
 
@@ -187,11 +188,8 @@ namespace ChineseGame
             Grid.SetColumn(WordDataButtons[WordRowNum-1], 3);
             Grid.SetRow(WordDataButtons[WordRowNum-1], WordRowNum-1);
 
-            //In case first row disable button
-            if (WordRowNum == 1)
-            {
-                WordDataButtons[WordRowNum-1].IsEnabled = false;
-            }
+            //Always disable at first
+            WordDataButtons[WordRowNum - 1].IsEnabled = false;
         }
 
         //Remove row from word data grid
