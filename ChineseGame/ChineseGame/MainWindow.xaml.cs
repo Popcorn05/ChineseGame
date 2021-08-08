@@ -37,6 +37,7 @@ namespace ChineseGame
         //Word data
         private List<string[]> WordData;
         private List<TextBox[]> WordDataObjects;
+        private List<Button> WordDataButtons;
         private int MaxWords;
 
         //Constructor
@@ -70,8 +71,10 @@ namespace ChineseGame
             //Update grid size
             UpdateGridSize();
 
+            //Instantiate word data lists
             WordData = new List<string[]>();
             WordDataObjects = new List<TextBox[]>();
+            WordDataButtons = new List<Button>();
 
             //Word data first row
             AddWordDataRow();
@@ -149,8 +152,8 @@ namespace ChineseGame
             //Get current row num
             int WordRowNum = WordDataObjects.Count;
 
-            //If any textbox is filled
-            if (WordDataObjects[WordRowNum-1][0].Text != "" || WordDataObjects[WordRowNum - 1][1].Text != "" || WordDataObjects[WordRowNum - 1][2].Text != "")
+            //If any textbox is filled in bottom row add row
+            if (WordDataObjects[WordRowNum-1][0].Text != "" || WordDataObjects[WordRowNum-1][1].Text != "" || WordDataObjects[WordRowNum-1][2].Text != "")
             {
                 AddWordDataRow();
             }
@@ -159,15 +162,75 @@ namespace ChineseGame
         //Add row to word data grid
         public void AddWordDataRow()
         {
+            //Add new row def
             WordDataGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(40.0) });
+
+            //Add row to objects list
             WordDataObjects.Add(new TextBox[] { new TextBox(), new TextBox(), new TextBox() });
+
+            //Get current row num (w/ new row)
             int WordRowNum = WordDataObjects.Count;
+
+            //Loop through and format textboxes
             for (int i = 0; i < 3; i++)
             {
                 WordDataObjects[WordRowNum - 1][i].TextChanged += new TextChangedEventHandler(WordDataUpdate);
                 WordDataGrid.Children.Add(WordDataObjects[WordRowNum-1][i]);
-                Grid.SetColumn(WordDataObjects[WordRowNum - 1][i], i);
+                Grid.SetColumn(WordDataObjects[WordRowNum-1][i], i);
                 Grid.SetRow(WordDataObjects[WordRowNum-1][i],WordRowNum-1);
+            }
+
+            //Add button to list and grid and format
+            WordDataButtons.Add(new Button() { Content = "X" });
+            WordDataButtons[WordRowNum - 1].Click += new RoutedEventHandler(WordDataButtonClick);
+            WordDataGrid.Children.Add(WordDataButtons[WordRowNum-1]);
+            Grid.SetColumn(WordDataButtons[WordRowNum-1], 3);
+            Grid.SetRow(WordDataButtons[WordRowNum-1], WordRowNum-1);
+
+            //In case first row disable button
+            if (WordRowNum == 1)
+            {
+                WordDataButtons[WordRowNum-1].IsEnabled = false;
+            }
+        }
+
+        //Remove row from word data grid
+        public void RemoveWordDataRow(int RowNum)
+        {
+            //Remove objects as grid children
+            for (int i = 0; i < 3; i++)
+            {
+                WordDataGrid.Children.Remove(WordDataObjects[RowNum][i]);
+            }
+            WordDataGrid.Children.Remove(WordDataButtons[RowNum]);
+
+            //Remove row
+            WordDataGrid.RowDefinitions.RemoveAt(RowNum);
+
+            //Remove objects from respective lists
+            WordDataObjects.RemoveAt(RowNum);
+            WordDataButtons.RemoveAt(RowNum);
+
+            //Update grid positions
+            for (int r = 0; r < WordDataObjects.Count(); r++)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    Grid.SetRow(WordDataObjects[r][i], r);
+                }
+                Grid.SetRow(WordDataButtons[r], r);
+            }
+        }
+
+        //Event handler for word data gridrow remove button
+        public void WordDataButtonClick(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i < WordDataButtons.Count(); i++)
+            {
+                if (WordDataButtons[i] == sender)
+                {
+                    RemoveWordDataRow(i);
+                }
             }
         }
     }
