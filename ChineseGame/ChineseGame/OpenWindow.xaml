@@ -8,7 +8,7 @@
         Title="" Height="500" Width="400">
     
     <!-- Main body -->
-    <Grid>
+    <Grid Background="#FFF4EEFF">
         <!-- Setup body grid -->
         <!-- Setup auto adjust columns -->
         <Grid.ColumnDefinitions>
@@ -33,7 +33,7 @@
         <Label Name="OpenHeadingTop" Content="Chinese Worksheet" Grid.Column="1" Grid.Row="1" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Style="{StaticResource EditorHeading}"/>
         <Label Name="OpenHeadingBottom" Content="Creator" Grid.Column="1" Grid.Row="2" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Style="{StaticResource EditorHeading}"/>
         <!-- Buttons -->
-        <Button Name="NewButton" Content="New" Grid.Column="1" Grid.Row="4" Style="{StaticResource EditorButton}" Click="NewButton_Click"/>
-        <Button Name="LoadButton" Content="Load" Grid.Column="1" Grid.Row="6" Style="{StaticResource EditorButton}" Click="LoadButton_Click"/>
+        <Button Name="NewButton" Content="New" Grid.Column="1" Grid.Row="4" Style="{StaticResource EditorButton}" Click="NewButton_Click" Background="White"/>
+        <Button Name="LoadButton" Content="Load" Grid.Column="1" Grid.Row="6" Style="{StaticResource EditorButton}" Click="LoadButton_Click" Background="White"/>
     </Grid>
 </Window>
