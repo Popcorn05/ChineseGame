@@ -52,6 +52,7 @@ namespace ChineseGame
             //Add styles
             PreviewGrid.HorizontalAlignment = HorizontalAlignment.Center;
             PreviewGrid.VerticalAlignment = VerticalAlignment.Center;
+            PreviewGrid.Background = Brushes.White;
 
             //Grid border
             GridBorder = new Border();
