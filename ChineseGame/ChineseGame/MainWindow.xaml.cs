@@ -238,5 +238,144 @@ namespace ChineseGame
             SaveWindow Save = new SaveWindow();
             Save.Show();
         }
+
+        //Generate button click event
+        public void GenerateButtonClick(object sender, RoutedEventArgs e)
+        {
+            Generate();
+        }
+
+        //Generate grid
+        public void Generate()
+        {
+            //Clear old
+            WordData.Clear();
+            GridData = new string[GridSize, GridSize];
+
+            //Get word data from table
+            for (int r = 0; r < WordDataGrid.RowDefinitions.Count()-1; r++)
+            {
+                WordData.Add(new string[3]);
+                for (int i = 0; i < 3; i++)
+                {
+                    WordData[r][i] = WordDataObjects[r][i].Text;
+                }
+            }
+
+            //Place words in grid
+            List<int> IncludedWords = new List<int>();
+            int Loop = 0; //Which loop through
+            Random Chance = new Random();
+            while (Loop < 4)
+            {
+                for (int w = 0; w < WordData.Count(); w++)
+                {
+                    if (Chance.Next() > (Loop * 25))
+                    {
+                        //Split word in string array
+                        string[] CurWordSplit = new string[WordData[w][0].Length];
+                        for (int l = 0; l < WordData[w][0].Length; l++)
+                        {
+                            CurWordSplit[l] = WordData[w][0].Substring(l, 1);
+                        }
+                        bool WordAdded = false;
+                        for (int y = 0; y < GridSize && WordAdded == false; y++)
+                        {
+                            for (int x = 0; x < GridSize && WordAdded == false; x++)
+                            {
+                                if (GridData[y, x] == null)
+                                {
+                                    if (CurWordSplit.Length > 1)
+                                    {
+                                        int dir = 0; //Direction variable goes up for check in order n,s,e,w
+                                        while (dir < 4 && WordAdded == false)
+                                        {
+                                            //Define thingos for increment dir on word check
+                                            int xx = x;
+                                            int yy = y;
+                                            while (true) //Yes I know this is dangerous, but I also dont remember asking
+                                            {
+                                                //Increment based on direction
+                                                switch (dir)
+                                                {
+                                                    case 0:
+                                                        yy -= 1;
+                                                        break;
+                                                    case 1:
+                                                        yy += 1;
+                                                        break;
+                                                    case 2:
+                                                        xx += 1;
+                                                        break;
+                                                    case 3:
+                                                        xx -= 1;
+                                                        break;
+                                                }
+                                                //If out of bounds new dir
+                                                if (xx < 0 || xx >= GridSize || yy < 0 || yy >= GridSize)
+                                                {
+                                                    dir += 1;
+                                                    break;
+                                                }
+                                                //Check if space for this run
+                                                if (GridData[yy, xx] == null)
+                                                {
+                                                    //If end of word
+                                                    if (Math.Abs(x - xx) == CurWordSplit.Length || Math.Abs(y - yy) == CurWordSplit.Length - 1)
+                                                    {
+                                                        if (Chance.Next(100) > (75))
+                                                        {
+                                                            //Add index of word added (will have to tally multiples if answer output ends up existing)
+                                                            IncludedWords.Add(w);
+                                                            //Add to data
+                                                            xx = x;
+                                                            yy = y;
+                                                            for (int i = 0; i < CurWordSplit.Length; i++)
+                                                            {
+                                                                GridData[yy, xx] = CurWordSplit[i];
+                                                                switch (dir)
+                                                                {
+                                                                    case 0:
+                                                                        yy -= 1;
+                                                                        break;
+                                                                    case 1:
+                                                                        yy += 1;
+                                                                        break;
+                                                                    case 2:
+                                                                        xx += 1;
+                                                                        break;
+                                                                    case 3:
+                                                                        xx -= 1;
+                                                                        break;
+                                                                }
+                                                            }
+                                                            //Stop checking directions
+                                                            WordAdded = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    dir += 1;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else //If current word only 1 long
+                                    {
+                                        IncludedWords.Add(w);
+                                        GridData[y, x] = CurWordSplit[0];
+                                        WordAdded = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                Loop += 1;
+            }
+        }
     }
 }
