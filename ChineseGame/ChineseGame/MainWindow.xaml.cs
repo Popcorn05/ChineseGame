@@ -34,6 +34,7 @@ namespace ChineseGame
         private Grid PreviewGrid;
         private Border GridBorder;
         private List<Border> GridBorders;
+        private List<List<Label>> GridLabels;
         //Word data
         private List<string[]> WordData;
         private List<TextBox[]> WordDataObjects;
@@ -62,6 +63,7 @@ namespace ChineseGame
             GridBorder.Child = PreviewGrid;
 
             GridBorders = new List<Border>();
+            GridLabels = new List<List<Label>>();
 
             //Add to body grid
             BodyGrid.Children.Add(GridBorder);
@@ -251,6 +253,8 @@ namespace ChineseGame
             //Clear old
             WordData.Clear();
             GridData = new string[GridSize, GridSize];
+            UpdateGridSize();
+            GridLabels.Clear();
 
             //Get word data from table
             for (int r = 0; r < WordDataGrid.RowDefinitions.Count()-1; r++)
@@ -375,6 +379,18 @@ namespace ChineseGame
                     }
                 }
                 Loop += 1;
+            }
+            //Display
+            for (int y = 0; y < GridSize; y++)
+            {
+                GridLabels.Add(new List<Label>());
+                for (int x = 0; x < GridSize; x++)
+                {
+                    GridLabels[y].Add(new Label { Content = GridData[y, x] });
+                    PreviewGrid.Children.Add(GridLabels[y][x]);
+                    Grid.SetColumn(GridLabels[y][x], x);
+                    Grid.SetRow(GridLabels[y][x], y);
+                }
             }
         }
     }
