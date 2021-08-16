@@ -39,7 +39,7 @@ namespace ChineseGame
         private List<string[]> WordData;
         private List<TextBox[]> WordDataObjects;
         private List<Button> WordDataButtons;
-        private int MaxWords;
+        private List<String> WordChars;
 
         //Constructor
         public MainWindow()
@@ -77,6 +77,7 @@ namespace ChineseGame
             WordData = new List<string[]>();
             WordDataObjects = new List<TextBox[]>();
             WordDataButtons = new List<Button>();
+            WordChars = new List<string>();
 
             //Word data first row
             AddWordDataRow();
@@ -281,17 +282,18 @@ namespace ChineseGame
                         for (int l = 0; l < WordData[w][0].Length; l++)
                         {
                             CurWordSplit[l] = WordData[w][0].Substring(l, 1);
+                            WordChars.Add(CurWordSplit[l]);
                         }
                         bool WordAdded = false;
-                        for (int y = 0; y < GridSize && WordAdded == false; y++)
+                        for (int y = 0; y < GridSize && WordAdded == false; y = Chance.Next(GridSize+1))
                         {
-                            for (int x = 0; x < GridSize && WordAdded == false; x++)
+                            for (int x = 0; x < GridSize && WordAdded == false; x = Chance.Next(GridSize+1))
                             {
                                 if (GridData[y, x] == null)
                                 {
                                     if (CurWordSplit.Length > 1)
                                     {
-                                        int dir = 0; //Direction variable goes up for check in order n,s,e,w
+                                        int dir = Chance.Next(4); //Direction variable goes up for check in order n,s,e,w
                                         while (dir < 4 && WordAdded == false)
                                         {
                                             //Define thingos for increment dir on word check
@@ -369,9 +371,12 @@ namespace ChineseGame
                                     }
                                     else //If current word only 1 long
                                     {
-                                        IncludedWords.Add(w);
-                                        GridData[y, x] = CurWordSplit[0];
-                                        WordAdded = true;
+                                        if (Chance.Next(100) > (55))
+                                        {
+                                            IncludedWords.Add(w);
+                                            GridData[y, x] = CurWordSplit[0];
+                                            WordAdded = true;
+                                        }
                                     }
                                 }
                             }
@@ -380,6 +385,18 @@ namespace ChineseGame
                 }
                 Loop += 1;
             }
+            //Fill blank spots
+            for (int y = 0; y < GridSize; y++)
+            {
+                for (int x = 0; x < GridSize; x++)
+                {
+                    if (GridData[y,x] == null)
+                    {
+                        GridData[y, x] = WordChars[Chance.Next(WordChars.Count())];
+                    }
+                }
+            }
+
             //Display
             for (int y = 0; y < GridSize; y++)
             {
