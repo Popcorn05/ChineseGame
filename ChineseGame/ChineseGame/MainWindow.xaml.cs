@@ -405,6 +405,10 @@ namespace ChineseGame
                 for (int x = 0; x < GridSize; x++)
                 {
                     GridLabels[y].Add(new Label { Content = GridData[y, x] });
+                    GridLabels[y][x].HorizontalAlignment = HorizontalAlignment.Center;
+                    GridLabels[y][x].VerticalAlignment = VerticalAlignment.Center;
+                    GridLabels[y][x].FontFamily = new FontFamily("Microsoft YaHei");
+                    GridLabels[y][x].FontSize = GridLabels[y][x].FontSize + 2*(10 - GridSize);
                     PreviewGrid.Children.Add(GridLabels[y][x]);
                     Grid.SetColumn(GridLabels[y][x], x);
                     Grid.SetRow(GridLabels[y][x], y);
