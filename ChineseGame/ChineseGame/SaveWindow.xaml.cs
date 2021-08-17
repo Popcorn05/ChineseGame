@@ -11,6 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ChineseGame
 {
@@ -19,14 +22,27 @@ namespace ChineseGame
     /// </summary>
     public partial class SaveWindow : Window
     {
-        public SaveWindow()
+        public string SheetTitle = "";
+        public string SheetTitleChinese = "";
+        public string GridSize = "";
+        public List<string[]> WordData;
+        public SaveWindow(string SheetTitleData, string SheetTitleChineseData, string GridSizeData, List<string[]> WordDataData)
         {
             InitializeComponent();
+
+            SheetTitle = SheetTitleData;
+            SheetTitleChinese = SheetTitleData;
+            GridSize = GridSizeData;
+            WordData = WordDataData;
         }
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+		{          
+            string[] saveData = new string[] {SheetTitle, SheetTitleChinese, GridSize};
 
-		private void SaveButton_Click(object sender, RoutedEventArgs e)
-		{
-
-		}
+            string jsonSaveData = JsonSerializer.Serialize(saveData);
+            string jsonWordData = JsonSerializer.Serialize(WordData);
+            File.WriteAllText(@"C:\Users\FerdDan\OneDrive - Donvale Christian College\Desktop\path.json", jsonSaveData);
+            File.AppendAllText(@"C:\Users\FerdDan\OneDrive - Donvale Christian College\Desktop\path.json", jsonWordData);
+        }
 	}
 }
