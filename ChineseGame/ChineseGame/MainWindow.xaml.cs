@@ -148,6 +148,7 @@ namespace ChineseGame
             {
                 UpdateGridSize();
             }
+            GridGenned = false;
         }
 
         //Update word data grid
@@ -161,6 +162,18 @@ namespace ChineseGame
             {
                 AddWordDataRow();
                 WordDataButtons[WordRowNum - 1].IsEnabled = true;
+            }
+
+            //Reset grid genned
+            GridGenned = false;
+
+            //Make sure doent go over character limit
+            for (int r = 0; r < WordRowNum; r++)
+            {
+                if (WordDataObjects[r][0].Text.Length > GridSize)
+                {
+                    WordDataObjects[r][0].Text = WordDataObjects[r][0].Text.Substring(0, GridSize);
+                }
             }
         }
 
@@ -250,6 +263,9 @@ namespace ChineseGame
         }
 
         //Generate grid
+        //This function makes me physically sick
+        //If I ever have to come back to this I think I might just like
+        //Give up
         public void Generate()
         {
             //Clear old
@@ -257,6 +273,7 @@ namespace ChineseGame
             GridData = new string[GridSize, GridSize];
             UpdateGridSize();
             GridLabels.Clear();
+            WordChars.Clear();
 
             //Get word data from table
             for (int r = 0; r < WordDataGrid.RowDefinitions.Count()-1; r++)
@@ -384,7 +401,134 @@ namespace ChineseGame
                         }
                     }
                 }
-                Loop += 1;
+
+                //Make sure each word is in once
+                if (Loop == 0)
+                {
+                    for (int w = 0; w < WordData.Count(); w++)
+                    {
+                        //Check if word has been included
+                        bool WordIncluded = false;
+                        for (int j = 0; j < IncludedWords.Count(); j++)
+                        {
+                            if (IncludedWords[j] == w)
+                            {
+                                WordIncluded = true;
+                            }
+                        }
+
+                        //If not then amke sure is added
+                        //this is completely copy pasted
+                        //some real yanderedev type coding here :)
+                        if (WordIncluded == false)
+                        {
+                            //Split word in string array
+                            string[] CurWordSplit = new string[WordData[w][0].Length];
+                            for (int l = 0; l < WordData[w][0].Length; l++)
+                            {
+                                CurWordSplit[l] = WordData[w][0].Substring(l, 1);
+                                WordChars.Add(CurWordSplit[l]);
+                            }
+                            bool WordAdded = false;
+                            for (int y = 0; y < GridSize && WordAdded == false; y++)
+                            {
+                                for (int x = 0; x < GridSize && WordAdded == false; x++)
+                                {
+                                    if (GridData[y, x] == null)
+                                    {
+                                        if (CurWordSplit.Length > 1)
+                                        {
+                                            int dir = Chance.Next(4); //Direction variable goes up for check in order n,s,e,w
+                                            while (dir < 4 && WordAdded == false)
+                                            {
+                                                //Define thingos for increment dir on word check
+                                                int xx = x;
+                                                int yy = y;
+                                                while (true) //Yes I know this is dangerous, but I also dont remember asking
+                                                {
+                                                    //Increment based on direction
+                                                    switch (dir)
+                                                    {
+                                                        case 0:
+                                                            yy -= 1;
+                                                            break;
+                                                        case 1:
+                                                            yy += 1;
+                                                            break;
+                                                        case 2:
+                                                            xx += 1;
+                                                            break;
+                                                        case 3:
+                                                            xx -= 1;
+                                                            break;
+                                                    }
+                                                    //If out of bounds new dir
+                                                    if (xx < 0 || xx >= GridSize || yy < 0 || yy >= GridSize)
+                                                    {
+                                                        dir += 1;
+                                                        break;
+                                                    }
+                                                    //Check if space for this run
+                                                    if (GridData[yy, xx] == null)
+                                                    {
+                                                        //If end of word
+                                                        if (Math.Abs(x - xx) == CurWordSplit.Length || Math.Abs(y - yy) == CurWordSplit.Length - 1)
+                                                        {
+                                                            if (Chance.Next(100) > (75))
+                                                            {
+                                                                //IncludedWords.Add(w);
+                                                                //Add to data
+                                                                xx = x;
+                                                                yy = y;
+                                                                for (int i = 0; i < CurWordSplit.Length; i++)
+                                                                {
+                                                                    GridData[yy, xx] = CurWordSplit[i];
+                                                                    switch (dir)
+                                                                    {
+                                                                        case 0:
+                                                                            yy -= 1;
+                                                                            break;
+                                                                        case 1:
+                                                                            yy += 1;
+                                                                            break;
+                                                                        case 2:
+                                                                            xx += 1;
+                                                                            break;
+                                                                        case 3:
+                                                                            xx -= 1;
+                                                                            break;
+                                                                    }
+                                                                }
+                                                                //Stop checking directions
+                                                                WordAdded = true;
+                                                                break;
+                                                            }
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        dir += 1;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        else //If current word only 1 long
+                                        {
+                                            if (Chance.Next(100) > (55))
+                                            {
+                                                //IncludedWords.Add(w);
+                                                GridData[y, x] = CurWordSplit[0];
+                                                WordAdded = true;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                Loop++;
             }
             //Fill blank spots
             for (int y = 0; y < GridSize; y++)
@@ -405,11 +549,16 @@ namespace ChineseGame
                 for (int x = 0; x < GridSize; x++)
                 {
                     GridLabels[y].Add(new Label { Content = GridData[y, x] });
+                    GridLabels[y][x].HorizontalAlignment = HorizontalAlignment.Center;
+                    GridLabels[y][x].VerticalAlignment = VerticalAlignment.Center;
+                    GridLabels[y][x].FontFamily = new FontFamily("Microsoft YaHei");
+                    GridLabels[y][x].FontSize = GridLabels[y][x].FontSize + 2*(10 - GridSize);
                     PreviewGrid.Children.Add(GridLabels[y][x]);
                     Grid.SetColumn(GridLabels[y][x], x);
                     Grid.SetRow(GridLabels[y][x], y);
                 }
             }
+            GridGenned = true;
         }
     }
 }
