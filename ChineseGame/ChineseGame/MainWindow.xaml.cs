@@ -82,12 +82,6 @@ namespace ChineseGame
 
             //Word data first row
             AddWordDataRow();
-
-            if (load == true)
-            {
-                var i = 1;
-                content = "";
-            }
         }
 
         //INPUTS-----------------------------------------------

@@ -56,12 +56,12 @@ namespace ChineseGame
                 {
                     content = reader.ReadToEnd();
                 }
-            }
 
-            //Create window and pass thru
-            MainWindow Editor = new MainWindow(true, content);
-            Editor.Show();
-            this.Close();
+                //Create window and pass thru
+                MainWindow Editor = new MainWindow(true, content);
+                Editor.Show();
+                this.Close();
+            }
         }
     }
 }
