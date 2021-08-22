@@ -42,7 +42,7 @@ namespace ChineseGame
         private List<String> WordChars;
 
         //Constructor
-        public MainWindow()
+        public MainWindow(bool load, string content = "")
         {
             //Init window
             InitializeComponent();
@@ -82,6 +82,12 @@ namespace ChineseGame
 
             //Word data first row
             AddWordDataRow();
+
+            if (load == true)
+            {
+                var i = 1;
+                content = "";
+            }
         }
 
         //INPUTS-----------------------------------------------
