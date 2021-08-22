@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.Win32;
 
 namespace ChineseGame
 {
@@ -26,23 +27,56 @@ namespace ChineseGame
         public string SheetTitleChinese = "";
         public string GridSize = "";
         public List<string[]> WordData;
+
+        private string filePath;
         public SaveWindow(string SheetTitleData, string SheetTitleChineseData, string GridSizeData, List<string[]> WordDataData)
         {
             InitializeComponent();
 
             SheetTitle = SheetTitleData;
-            SheetTitleChinese = SheetTitleData;
+            SheetTitleChinese = SheetTitleChineseData;
             GridSize = GridSizeData;
             WordData = WordDataData;
         }
         private void SaveButton_Click(object sender, RoutedEventArgs e)
-		{          
-            string[] saveData = new string[] {SheetTitle, SheetTitleChinese, GridSize};
+        {
+            if (AsProjectRadioButton.IsChecked == true)
+            {
+                filePath += ".wsheet";
 
-            string jsonSaveData = JsonSerializer.Serialize(saveData);
-            string jsonWordData = JsonSerializer.Serialize(WordData);
-            File.WriteAllText(@"C:\Users\FerdDan\OneDrive - Donvale Christian College\Desktop\path.json", jsonSaveData);
-            File.AppendAllText(@"C:\Users\FerdDan\OneDrive - Donvale Christian College\Desktop\path.json", jsonWordData);
+                List<string[]> jsonData = new List<string[]>();
+
+                jsonData.Add( new string[] { SheetTitle, SheetTitleChinese, GridSize });
+                for (int r = 0; r < WordData.Count(); r++)
+                {
+                    jsonData.Add(new string[] { WordData[r][0], WordData[r][1], WordData[r][2] });
+                }
+
+                string jsonSaveData = JsonSerializer.Serialize(jsonData.ToArray());
+                File.WriteAllText(filePath, jsonSaveData);
+
+                MessageBox.Show("Project Saved!");
+            }
+        }
+
+        private void LocationButton_Click(object sender, RoutedEventArgs e)
+        {
+            //File location
+            SaveFileDialog SaveDialog = new SaveFileDialog();
+
+            if (SaveDialog.ShowDialog() == true)
+            {
+                filePath = SaveDialog.FileName;
+                SaveButton.IsEnabled = true;
+            }
         }
 	}
+
+    public class SaveData
+    {
+        string SheetTitle;
+        string SheetTitleChinese;
+        int GridSize;
+        string[,] WordData;
+    }
 }
