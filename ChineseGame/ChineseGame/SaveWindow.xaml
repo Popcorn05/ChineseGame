@@ -31,7 +31,7 @@
         <Label Name="FileFormatHeading" Content="File Format" Grid.Column="1" Grid.Row="5" FontSize="12" HorizontalAlignment="Left" BorderBrush="#424874" BorderThickness="2" Background="White" Style="{StaticResource EditorHeading}"/>
         <Label Name="SaveMenuHeading" Content="Save Menu" Grid.Column="1" Grid.Row="1" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Style="{StaticResource EditorHeading}"/>
 
-        <Button Name="ChooseFileLocationButton" Content="Choose File Location ..." Grid.Column="1" Grid.Row="3" Style="{StaticResource EditorButton}" BorderBrush="Black" Background="White"/>
+        <Button Name="ChooseFileLocationButton" Content="Choose File Location ..." Grid.Column="1" Grid.Row="3" Style="{StaticResource EditorButton}" BorderBrush="Black" Background="White" Click="LocationButton_Click"/>
 
         <!-- File Format Sub-grid -->
         <Border BorderBrush="#424874" BorderThickness="4" Grid.Column="1" Grid.Row="7">
@@ -51,7 +51,7 @@
 
                 <!-- File Format Content -->
                 <RadioButton Name="AsProjectRadioButton" Content="As Project" Grid.Column="1" Grid.Row="1" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-                <RadioButton Name="ToExportRadioButton" Content="To Export" Grid.Column="1" Grid.Row="3" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                <RadioButton Name="AsExportRadioButton" Content="To Export" Grid.Column="1" Grid.Row="3" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
             </Grid>
         </Border>
 
@@ -67,7 +67,7 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
-            <Button Name="SaveButton" Content="Save" Grid.Column="2" Grid.Row="0" Style="{StaticResource EditorButton}" Click="SaveButton_Click" HorizontalAlignment="Stretch" Background="White"/>
+            <Button Name="SaveButton" Content="Save" Grid.Column="2" Grid.Row="0" Style="{StaticResource EditorButton}" Click="SaveButton_Click" HorizontalAlignment="Stretch" Background="White" IsEnabled="False"/>
             
         </Grid>
     </Grid>
