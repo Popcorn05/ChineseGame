@@ -102,10 +102,13 @@ namespace ChineseGame
                     WordData.Add(loadData[r]);
                     for (int w = 0; w < 3; w++)
                     {
-                        WordDataObjects[r - 1][w].Text = WordData[r - 1][w];
+                        WordDataObjects[r - 1][w].Text = loadData[r][w];
                     }
                     AddWordDataRow();
                 }
+                RemoveWordDataRow(WordDataGrid.RowDefinitions.Count() - 1);
+                WordDataButtons[WordDataButtons.Count() - 2].IsEnabled = true;
+                UpdateGridSize();
             }
         }
 
