@@ -31,7 +31,7 @@ namespace ChineseGame
         //On New button click
         public void NewButton_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow Editor = new MainWindow();
+            MainWindow Editor = new MainWindow(false);
             Editor.Show();
             this.Close();
         }
@@ -42,18 +42,25 @@ namespace ChineseGame
             //Create file dialog object
             OpenFileDialog LoadDialog = new OpenFileDialog();
 
-            //Get default saves location
-            var SavesPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "WorksheetSaves");
-            LoadDialog.InitialDirectory = SavesPath; //Set initial directory to saves dir
-
             //Set to only display worksheet files
-            LoadDialog.DefaultExt = ".wsheet";
             LoadDialog.Filter = "Save files (.wsheet)|*.wsheet";
+
+            string content = "";
 
             //Display and load file
             if (LoadDialog.ShowDialog() == true)
             {
-                
+                string fileName = LoadDialog.FileName;
+                Stream fileStream = LoadDialog.OpenFile();
+                using (StreamReader reader = new StreamReader(fileStream))
+                {
+                    content = reader.ReadToEnd();
+                }
+
+                //Create window and pass thru
+                MainWindow Editor = new MainWindow(true, content);
+                Editor.Show();
+                this.Close();
             }
         }
     }
