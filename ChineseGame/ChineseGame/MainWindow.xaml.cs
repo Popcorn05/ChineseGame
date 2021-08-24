@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.Json;
 
 namespace ChineseGame
 {
@@ -82,6 +83,30 @@ namespace ChineseGame
 
             //Word data first row
             AddWordDataRow();
+
+            //If loading load in data
+            if (load == true)
+            {
+                List<string[]> loadData = JsonSerializer.Deserialize<List<string[]>>(content);
+
+                SheetTitle = loadData[0][0];
+                SheetTitleChinese = loadData[0][1];
+                WorksheetTitleInput.Text = SheetTitle;
+                WorksheetTitleChineseInput.Text = loadData[0][1];
+
+                GridSize = Int32.Parse(loadData[0][2]);
+                GridSlider.Value = GridSize;
+                
+                for (int r = 1; r < loadData.Count(); r++)
+                {
+                    WordData.Add(loadData[r]);
+                    for (int w = 0; w < 3; w++)
+                    {
+                        WordDataObjects[r - 1][w].Text = WordData[r - 1][w];
+                    }
+                    AddWordDataRow();
+                }
+            }
         }
 
         //INPUTS-----------------------------------------------
@@ -149,6 +174,11 @@ namespace ChineseGame
                 UpdateGridSize();
             }
             GridGenned = false;
+
+            if (SaveButton != null)
+            {
+                SaveButton.IsEnabled = false;
+            }
         }
 
         //Update word data grid
@@ -175,6 +205,8 @@ namespace ChineseGame
                     WordDataObjects[r][0].Text = WordDataObjects[r][0].Text.Substring(0, GridSize);
                 }
             }
+
+            SaveButton.IsEnabled = false;
         }
 
         //Add row to word data grid
@@ -559,6 +591,7 @@ namespace ChineseGame
                 }
             }
             GridGenned = true;
+            SaveButton.IsEnabled = true;
         }
     }
 }
