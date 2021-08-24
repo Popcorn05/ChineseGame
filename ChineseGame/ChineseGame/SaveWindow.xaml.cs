@@ -57,6 +57,7 @@ namespace ChineseGame
 
                 MessageBox.Show("Project Saved!");
             }
+            this.Close();
         }
 
         private void LocationButton_Click(object sender, RoutedEventArgs e)
@@ -68,15 +69,8 @@ namespace ChineseGame
             {
                 filePath = SaveDialog.FileName;
                 SaveButton.IsEnabled = true;
+                ChooseFileLocationButton.Content = filePath;
             }
         }
 	}
-
-    public class SaveData
-    {
-        string SheetTitle;
-        string SheetTitleChinese;
-        int GridSize;
-        string[,] WordData;
-    }
 }
