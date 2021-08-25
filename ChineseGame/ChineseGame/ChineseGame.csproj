@@ -6,4 +6,8 @@
         <UseWPF>true</UseWPF>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Aspose.PDF" Version="21.8.0" />
+    </ItemGroup>
+
 </Project>

@@ -15,6 +15,7 @@ using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Win32;
+using Aspose.Pdf;
 
 namespace ChineseGame
 {
@@ -71,6 +72,11 @@ namespace ChineseGame
                 SaveButton.IsEnabled = true;
                 ChooseFileLocationButton.Content = filePath;
             }
+        }
+
+        private Document CreateWorksheetPDF()
+        {
+            return new Document();
         }
 	}
 }

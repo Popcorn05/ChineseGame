@@ -105,9 +105,9 @@ namespace ChineseGame
                         WordDataObjects[r - 1][w].Text = loadData[r][w];
                     }
                     AddWordDataRow();
+                    WordDataButtons[r - 1].IsEnabled = true;
                 }
                 RemoveWordDataRow(WordDataGrid.RowDefinitions.Count() - 1);
-                WordDataButtons[WordDataButtons.Count() - 2].IsEnabled = true;
                 UpdateGridSize();
             }
         }
