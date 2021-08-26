@@ -102,10 +102,13 @@ namespace ChineseGame
                     WordData.Add(loadData[r]);
                     for (int w = 0; w < 3; w++)
                     {
-                        WordDataObjects[r - 1][w].Text = WordData[r - 1][w];
+                        WordDataObjects[r - 1][w].Text = loadData[r][w];
                     }
                     AddWordDataRow();
+                    WordDataButtons[r - 1].IsEnabled = true;
                 }
+                RemoveWordDataRow(WordDataGrid.RowDefinitions.Count() - 1);
+                UpdateGridSize();
             }
         }
 
@@ -284,7 +287,7 @@ namespace ChineseGame
         //Open save window
         public void SaveButtonClick(object sender, RoutedEventArgs e)
         {
-            SaveWindow Save = new SaveWindow(SheetTitle, SheetTitleChinese, GridSize.ToString(), WordData);
+            SaveWindow Save = new SaveWindow(SheetTitle, SheetTitleChinese, GridSize.ToString(), WordData, GridData);
             Save.Show();
         }
 
