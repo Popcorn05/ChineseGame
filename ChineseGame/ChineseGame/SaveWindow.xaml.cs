@@ -16,6 +16,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Win32;
 using Aspose.Pdf;
+using Aspose.Pdf.Text;
 
 namespace ChineseGame
 {
@@ -24,13 +25,14 @@ namespace ChineseGame
     /// </summary>
     public partial class SaveWindow : Window
     {
-        public string SheetTitle = "";
-        public string SheetTitleChinese = "";
-        public string GridSize = "";
-        public List<string[]> WordData;
+        private string SheetTitle = "";
+        private string SheetTitleChinese = "";
+        private string GridSize = "";
+        private string[,] GridData;
+        private List<string[]> WordData;
 
         private string filePath;
-        public SaveWindow(string SheetTitleData, string SheetTitleChineseData, string GridSizeData, List<string[]> WordDataData)
+        public SaveWindow(string SheetTitleData, string SheetTitleChineseData, string GridSizeData, List<string[]> WordDataData, string[,] GridDataData)
         {
             InitializeComponent();
 
@@ -38,6 +40,7 @@ namespace ChineseGame
             SheetTitleChinese = SheetTitleChineseData;
             GridSize = GridSizeData;
             WordData = WordDataData;
+            GridData = GridDataData;
         }
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
@@ -56,7 +59,14 @@ namespace ChineseGame
                 string jsonSaveData = JsonSerializer.Serialize(jsonData.ToArray());
                 File.WriteAllText(filePath, jsonSaveData);
 
-                MessageBox.Show("Project Saved!");
+                MessageBox.Show("Project Saved");
+            } else
+            {
+                filePath += ".pdf";
+                Document outPDF = CreateWorksheetPDF();
+                outPDF.Save(filePath);
+
+                MessageBox.Show("PDF Exported");
             }
             this.Close();
         }
@@ -76,7 +86,13 @@ namespace ChineseGame
 
         private Document CreateWorksheetPDF()
         {
-            return new Document();
+            Document outDoc = new Document();
+
+            Aspose.Pdf.Page outPage = outDoc.Pages.Add();
+
+            outPage.Paragraphs.Add(new TextFragment("Hello World"));
+
+            return outDoc;
         }
 	}
 }

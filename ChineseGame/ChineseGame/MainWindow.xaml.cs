@@ -287,7 +287,7 @@ namespace ChineseGame
         //Open save window
         public void SaveButtonClick(object sender, RoutedEventArgs e)
         {
-            SaveWindow Save = new SaveWindow(SheetTitle, SheetTitleChinese, GridSize.ToString(), WordData);
+            SaveWindow Save = new SaveWindow(SheetTitle, SheetTitleChinese, GridSize.ToString(), WordData, GridData);
             Save.Show();
         }
 
