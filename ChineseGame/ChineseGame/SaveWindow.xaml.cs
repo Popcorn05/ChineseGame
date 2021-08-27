@@ -90,7 +90,39 @@ namespace ChineseGame
 
             Aspose.Pdf.Page outPage = outDoc.Pages.Add();
 
-            outPage.Paragraphs.Add(new TextFragment("Hello World"));
+            outPage.Paragraphs.Add(new TextFragment($"Worksheet Title: {SheetTitle}"));
+            outPage.Paragraphs.Add(new TextFragment($"Worksheet Title: {SheetTitleChinese}"));
+
+            Aspose.Pdf.Table table = new Aspose.Pdf.Table();
+
+            table.Border = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.FromRgb(System.Drawing.Color.LightGray));
+            table.DefaultCellBorder = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.FromRgb(System.Drawing.Color.LightGray));
+
+            for (int row_count = 1; row_count < Int16.Parse(GridSize); row_count++)
+            {
+
+                Aspose.Pdf.Row row = table.Rows.Add();
+
+                for (int r = 0; r < Int16.Parse(GridSize); r++)
+                {
+                    row.Cells.Add(GridData[0, r]);
+                }
+
+            }
+
+            outPage.Paragraphs.Add(new TextFragment("Chinese Pinyin English Count"));
+
+            for (int row_count = 1; row_count < 10; row_count++)
+            {
+                // Add row to table
+                Aspose.Pdf.Row row = table.Rows.Add();
+                // Add table cells
+                row.Cells.Add("Column (" + row_count + ", 1)");
+                row.Cells.Add("Column (" + row_count + ", 2)");
+                row.Cells.Add("Column (" + row_count + ", 3)");
+            }
+
+            outPage.Paragraphs.Add(table);
 
             return outDoc;
         }
