@@ -37,6 +37,7 @@ namespace ChineseGame
         private List<Border> GridBorders;
         private List<List<Label>> GridLabels;
         //Word data
+        private int WordDataGridSize = 0;
         private List<string[]> WordData;
         private List<TextBox[]> WordDataObjects;
         private List<Button> WordDataButtons;
@@ -242,6 +243,9 @@ namespace ChineseGame
 
             //Always disable at first
             WordDataButtons[WordRowNum - 1].IsEnabled = false;
+
+            //Increase word data grid size var
+            WordDataGridSize = WordDataObjects.Count - 1;
         }
 
         //Remove row from word data grid
@@ -270,6 +274,9 @@ namespace ChineseGame
                 }
                 Grid.SetRow(WordDataButtons[r], r);
             }
+
+            //Decrease word data grid size var
+            WordDataGridSize = WordDataObjects.Count - 1;
         }
 
         //Event handler for word data gridrow remove button
@@ -287,7 +294,7 @@ namespace ChineseGame
         //Open save window
         public void SaveButtonClick(object sender, RoutedEventArgs e)
         {
-            SaveWindow Save = new SaveWindow(SheetTitle, SheetTitleChinese, GridSize.ToString(), WordData, GridData);
+            SaveWindow Save = new SaveWindow(SheetTitle, SheetTitleChinese, GridSize.ToString(), WordData, GridData, WordDataGridSize.ToString());
             Save.Show();
         }
 

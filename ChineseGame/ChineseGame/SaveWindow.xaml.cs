@@ -29,10 +29,11 @@ namespace ChineseGame
         private string SheetTitleChinese = "";
         private string GridSize = "";
         private string[,] GridData;
+        private string WordDataGridSize;
         private List<string[]> WordData;
 
         private string filePath;
-        public SaveWindow(string SheetTitleData, string SheetTitleChineseData, string GridSizeData, List<string[]> WordDataData, string[,] GridDataData)
+        public SaveWindow(string SheetTitleData, string SheetTitleChineseData, string GridSizeData, List<string[]> WordDataData, string[,] GridDataData, string WordDataGridSizeData)
         {
             InitializeComponent();
 
@@ -41,6 +42,7 @@ namespace ChineseGame
             GridSize = GridSizeData;
             WordData = WordDataData;
             GridData = GridDataData;
+            WordDataGridSize = WordDataGridSizeData;
         }
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
@@ -93,36 +95,47 @@ namespace ChineseGame
             outPage.Paragraphs.Add(new TextFragment($"Worksheet Title: {SheetTitle}"));
             outPage.Paragraphs.Add(new TextFragment($"Worksheet Title: {SheetTitleChinese}"));
 
-            Aspose.Pdf.Table table = new Aspose.Pdf.Table();
+            Aspose.Pdf.Table gridTable = new Aspose.Pdf.Table();
 
-            table.Border = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.FromRgb(System.Drawing.Color.LightGray));
-            table.DefaultCellBorder = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.FromRgb(System.Drawing.Color.LightGray));
+            gridTable.Border = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.FromRgb(System.Drawing.Color.LightGray));
+            gridTable.DefaultCellBorder = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.FromRgb(System.Drawing.Color.LightGray));
 
-            for (int row_count = 1; row_count < Int16.Parse(GridSize); row_count++)
+            for (int row_count = 0; row_count < Int16.Parse(GridSize); row_count++)
             {
 
-                Aspose.Pdf.Row row = table.Rows.Add();
+                Aspose.Pdf.Row gridRow = gridTable.Rows.Add();
 
                 for (int r = 0; r < Int16.Parse(GridSize); r++)
                 {
-                    row.Cells.Add(GridData[0, r]);
+                    gridRow.Cells.Add(GridData[row_count, r]);
                 }
 
             }
 
-            outPage.Paragraphs.Add(new TextFragment("Chinese Pinyin English Count"));
+            Aspose.Pdf.Table wordTable = new Aspose.Pdf.Table();
 
-            for (int row_count = 1; row_count < 10; row_count++)
+            wordTable.Border = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.FromRgb(System.Drawing.Color.LightGray));
+            wordTable.DefaultCellBorder = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.FromRgb(System.Drawing.Color.LightGray));
+
+            Aspose.Pdf.Row titleRow = wordTable.Rows.Add();
+            titleRow.Cells.Add("Chinese");
+            titleRow.Cells.Add("Pinyin");
+            titleRow.Cells.Add("English");
+            titleRow.Cells.Add("Count");
+
+            for (int row_count = 0; row_count < Int16.Parse(WordDataGridSize); row_count++)
             {
                 // Add row to table
-                Aspose.Pdf.Row row = table.Rows.Add();
+                Aspose.Pdf.Row wordRow = wordTable.Rows.Add();
                 // Add table cells
-                row.Cells.Add("Column (" + row_count + ", 1)");
-                row.Cells.Add("Column (" + row_count + ", 2)");
-                row.Cells.Add("Column (" + row_count + ", 3)");
+                wordRow.Cells.Add(WordData[row_count][0]);
+                wordRow.Cells.Add(WordData[row_count][1]);
+                wordRow.Cells.Add(WordData[row_count][2]);
+                wordRow.Cells.Add("");
             }
 
-            outPage.Paragraphs.Add(table);
+            outPage.Paragraphs.Add(gridTable);
+            outPage.Paragraphs.Add(wordTable);
 
             return outDoc;
         }
