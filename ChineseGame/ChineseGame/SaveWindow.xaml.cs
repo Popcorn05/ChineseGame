@@ -106,7 +106,9 @@ namespace ChineseGame
             Aspose.Pdf.Table gridTable = new Aspose.Pdf.Table
             {
                 DefaultCellPadding = new MarginInfo(),
-                Margin = { Bottom = 70 },
+                Margin = { Bottom = 70, Top = 30, Left = 18 * (11 - Int16.Parse(GridSize)), Right = 0 },
+
+                ColumnAdjustment = ColumnAdjustment.AutoFitToContent,
 
 				DefaultCellTextState =
 				{
@@ -115,12 +117,12 @@ namespace ChineseGame
 				}
 			};
 
-            gridTable.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Right;
+            gridTable.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Center;
 
-            //gridTable.DefaultCellPadding.Top = 5;
-            //gridTable.DefaultCellPadding.Left = 5;
-            //gridTable.DefaultCellPadding.Right = 0;
-            //gridTable.DefaultCellPadding.Bottom = 5;
+            gridTable.DefaultCellPadding.Top = 5;
+            gridTable.DefaultCellPadding.Left = 10;
+            gridTable.DefaultCellPadding.Right = 10;
+            gridTable.DefaultCellPadding.Bottom = 5;
 
             gridTable.Border = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.FromRgb(System.Drawing.Color.LightGray));
             gridTable.DefaultCellBorder = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.FromRgb(System.Drawing.Color.LightGray));
