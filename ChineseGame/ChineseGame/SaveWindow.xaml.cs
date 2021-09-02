@@ -92,37 +92,41 @@ namespace ChineseGame
 
             Aspose.Pdf.Page outPage = outDoc.Pages.Add();
 
-            var engHeader = new TextFragment($"Worksheet Title: {SheetTitle}");
-            var chinHeader = new TextFragment($"Worksheet Title: {SheetTitle}");
+            var engHeader = new TextFragment(SheetTitle);
+            var chinHeader = new TextFragment(SheetTitleChinese);
 
             engHeader.TextState.Font = FontRepository.FindFont("Arial");
-            engHeader.TextState.FontSize = 16;
+            engHeader.TextState.FontSize = 20;
+            engHeader.Margin.Bottom = 15;
+            engHeader.Margin.Top = 0;
             engHeader.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Left;
 
             chinHeader.TextState.Font = FontRepository.FindFont("Arial");
-            chinHeader.TextState.FontSize = 16;
+            chinHeader.TextState.FontSize = 20;
             chinHeader.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Left;
 
             Aspose.Pdf.Table gridTable = new Aspose.Pdf.Table
             {
                 DefaultCellPadding = new MarginInfo(),
-                Margin = { Bottom = 70, Top = 30, Left = 18 * (11 - Int16.Parse(GridSize)), Right = 0 },
+                Margin = { Bottom = 30, Top = 30, Left = 20 * (11 - Int16.Parse(GridSize)), Right = 0 },
 
-                ColumnAdjustment = ColumnAdjustment.AutoFitToContent,
+                //ColumnAdjustment = ColumnAdjustment.AutoFitToContent,
+                DefaultColumnWidth = "35",
 
-				DefaultCellTextState =
+                DefaultCellTextState =
 				{
 					Font = FontRepository.FindFont("Arial"),
-					FontSize = 24
+                    HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Center,
+					FontSize = 20
 				}
 			};
 
             gridTable.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Center;
 
-            gridTable.DefaultCellPadding.Top = 5;
-            gridTable.DefaultCellPadding.Left = 10;
-            gridTable.DefaultCellPadding.Right = 10;
-            gridTable.DefaultCellPadding.Bottom = 5;
+            gridTable.DefaultCellPadding.Top = 7;
+            gridTable.DefaultCellPadding.Left = 0;
+            gridTable.DefaultCellPadding.Right = 0;
+            gridTable.DefaultCellPadding.Bottom = 7;
 
             gridTable.Border = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.FromRgb(System.Drawing.Color.LightGray));
             gridTable.DefaultCellBorder = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.FromRgb(System.Drawing.Color.LightGray));
@@ -148,9 +152,11 @@ namespace ChineseGame
             wordTable.DefaultCellPadding = new MarginInfo();
             wordTable.DefaultCellPadding.Top = 5;
             wordTable.DefaultCellPadding.Bottom = 5;
-            wordTable.DefaultCellTextState.FontSize = 8;
+            wordTable.DefaultCellPadding.Left = 3;
+            wordTable.DefaultCellTextState.FontSize = 10;
 
             Aspose.Pdf.Row titleRow = wordTable.Rows.Add();
+            titleRow.DefaultCellTextState.FontSize = 12;
             titleRow.Cells.Add("Chinese");
             titleRow.Cells.Add("Pinyin");
             titleRow.Cells.Add("English");
