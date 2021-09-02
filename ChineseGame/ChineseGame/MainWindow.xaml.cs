@@ -301,7 +301,10 @@ namespace ChineseGame
         //Generate button click event
         public void GenerateButtonClick(object sender, RoutedEventArgs e)
         {
-            Generate();
+            if (WordDataObjects[0][0].Text != "")
+            {
+                Generate();
+            }
         }
 
         //Generate grid
