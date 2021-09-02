@@ -1,0 +1,39 @@
+﻿<Window x:Class="ChineseGame.OpenWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChineseGame"
+        mc:Ignorable="d"
+        Title="" Height="500" Width="400">
+    
+    <!-- Main body -->
+    <Grid Background="#FFF4EEFF">
+        <!-- Setup body grid -->
+        <!-- Setup auto adjust columns -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="1.5*"/>
+        </Grid.ColumnDefinitions>
+        <!-- Setup auto adjust columns -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.75*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2.5*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2.5*"/>
+            <RowDefinition Height="1.5*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Main content -->
+        <!-- Heading -->
+        <Label Name="OpenHeadingTop" Content="Chinese Worksheet" Grid.Column="1" Grid.Row="1" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Style="{StaticResource EditorHeading}"/>
+        <Label Name="OpenHeadingBottom" Content="Creator" Grid.Column="1" Grid.Row="2" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Style="{StaticResource EditorHeading}"/>
+        <!-- Buttons -->
+        <Button Name="NewButton" Content="New" Grid.Column="1" Grid.Row="4" Style="{StaticResource EditorButton}" Click="NewButton_Click" Background="White"/>
+        <Button Name="LoadButton" Content="Load" Grid.Column="1" Grid.Row="6" Style="{StaticResource EditorButton}" Click="LoadButton_Click" Background="White"/>
+    </Grid>
+</Window>
