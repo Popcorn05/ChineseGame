@@ -20,19 +20,18 @@ using Aspose.Pdf.Text;
 
 namespace ChineseGame
 {
-    /// <summary>
-    /// Interaction logic for SaveWindow.xaml
-    /// </summary>
     public partial class SaveWindow : Window
     {
+        //Init variables for passing through from editor. See editor for variable uses
         private string SheetTitle = "";
-        private string SheetTitleChinese = "";
+        private string SheetTitleChinese = ""; 
         private string GridSize = "";
         private string[,] GridData;
         private string WordDataGridSize;
         private List<string[]> WordData;
-
         private string filePath;
+
+        //Constructor
         public SaveWindow(string SheetTitleData, string SheetTitleChineseData, string GridSizeData, List<string[]> WordDataData, string[,] GridDataData, string WordDataGridSizeData)
         {
             InitializeComponent();
@@ -44,8 +43,11 @@ namespace ChineseGame
             GridData = GridDataData;
             WordDataGridSize = WordDataGridSizeData;
         }
+
+        //Save button click event
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            //If saving as project then add extension and serialize and save
             if (AsProjectRadioButton.IsChecked == true)
             {
                 filePath += ".wsheet";
@@ -62,7 +64,7 @@ namespace ChineseGame
                 File.WriteAllText(filePath, jsonSaveData);
 
                 MessageBox.Show("Project Saved");
-            } else
+            } else //Otherwise save as PDF, add extension, gen PDF and save
             {
                 filePath += ".pdf";
                 Document outPDF = CreateWorksheetPDF();
@@ -73,6 +75,7 @@ namespace ChineseGame
             this.Close();
         }
 
+        //Set file save location
         private void LocationButton_Click(object sender, RoutedEventArgs e)
         {
             //File location
@@ -86,12 +89,15 @@ namespace ChineseGame
             }
         }
 
+        //Create output PDF
         private Document CreateWorksheetPDF()
         {
+            //Setup document
             Document outDoc = new Document();
 
             Aspose.Pdf.Page outPage = outDoc.Pages.Add();
 
+            //Create title headers and format
             var engHeader = new TextFragment(SheetTitle);
             var chinHeader = new TextFragment(SheetTitleChinese);
 
@@ -105,6 +111,7 @@ namespace ChineseGame
             chinHeader.TextState.FontSize = 20;
             chinHeader.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Left;
 
+            //Word count grid creation, formatting and data input
             Aspose.Pdf.Table gridTable = new Aspose.Pdf.Table
             {
                 DefaultCellPadding = new MarginInfo(),
@@ -143,6 +150,7 @@ namespace ChineseGame
 
             }
 
+            //Word table creation, formatting and data input
             Aspose.Pdf.Table wordTable = new Aspose.Pdf.Table();
 
             wordTable.Border = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.FromRgb(System.Drawing.Color.LightGray));
@@ -173,12 +181,14 @@ namespace ChineseGame
                 wordRow.Cells.Add("");
             }
 
+            //Add all elements to page
             outPage.Paragraphs.Add(engHeader);
             outPage.Paragraphs.Add(chinHeader);
 
             outPage.Paragraphs.Add(gridTable);
             outPage.Paragraphs.Add(wordTable);
 
+            //Return doc
             return outDoc;
         }
 	}

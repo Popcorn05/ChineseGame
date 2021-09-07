@@ -17,9 +17,6 @@ using Path = System.IO.Path;
 
 namespace ChineseGame
 {
-    /// <summary>
-    /// Interaction logic for OpenWindow.xaml
-    /// </summary>
     public partial class OpenWindow : Window
     {
         //Window constructor
@@ -31,6 +28,7 @@ namespace ChineseGame
         //On New button click
         public void NewButton_Click(object sender, RoutedEventArgs e)
         {
+            //Create and show new editor window with false load argument, close this window
             MainWindow Editor = new MainWindow(false);
             Editor.Show();
             this.Close();
@@ -45,19 +43,20 @@ namespace ChineseGame
             //Set to only display worksheet files
             LoadDialog.Filter = "Save files (.wsheet)|*.wsheet";
 
+            //Init variable for holding loaded file in plaintext
             string content = "";
 
             //Display and load file
             if (LoadDialog.ShowDialog() == true)
             {
-                string fileName = LoadDialog.FileName;
-                Stream fileStream = LoadDialog.OpenFile();
-                using (StreamReader reader = new StreamReader(fileStream))
+                string fileName = LoadDialog.FileName; //Get filename
+                Stream fileStream = LoadDialog.OpenFile(); //Create filestream and open file
+                using (StreamReader reader = new StreamReader(fileStream)) //Using filestream reader use opened file to read into content variable
                 {
                     content = reader.ReadToEnd();
                 }
 
-                //Create window and pass thru
+                //Create show new editor window with load argument true and pass content, then close this window
                 MainWindow Editor = new MainWindow(true, content);
                 Editor.Show();
                 this.Close();

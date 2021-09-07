@@ -16,32 +16,29 @@ using System.Text.Json;
 
 namespace ChineseGame
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         //SETUP--------------------------------------------------
 
         //Declare variables
         //Titles
-        private string SheetTitle = "";
-        private string SheetTitleChinese = "";
+        private string SheetTitle = ""; //Worksheet title
+        private string SheetTitleChinese = ""; //Chinese worksheet title
         //Grid
-        private int GridSize = 6;
-        private string[,] GridData;
-        private bool GridGenned = false;
-        const double GridSizePixels = 275.0;
-        private Grid PreviewGrid;
-        private Border GridBorder;
-        private List<Border> GridBorders;
-        private List<List<Label>> GridLabels;
+        private int GridSize = 6; //Size of grid
+        private string[,] GridData; //Holds each character of each position in grid
+        private bool GridGenned = false; //Whether grid has been generated
+        const double GridSizePixels = 275.0; //Grid size in editor in pixels
+        private Grid PreviewGrid; //WPF Grid object for generated grid
+        private Border GridBorder; //WPF Border object for generated grid
+        private List<Border> GridBorders; //List of WPF Border objects for generated grid
+        private List<List<Label>> GridLabels; //List of WPF Label objects for the generated grid
         //Word data
-        private int WordDataGridSize = 0;
-        private List<string[]> WordData;
-        private List<TextBox[]> WordDataObjects;
-        private List<Button> WordDataButtons;
-        private List<String> WordChars;
+        private int WordDataGridSize = 0; //Number of words in worksheet 
+        private List<string[]> WordData; //Word data (Chinese, pinyin and english) of worksheet
+        private List<TextBox[]> WordDataObjects; //List of WPF Textboxes for word input
+        private List<Button> WordDataButtons; //List of WPF Buttons to remove rows
+        private List<String> WordChars; //All characters contained within words, used for filling empty spaces during grid generation
 
         //Constructor
         public MainWindow(bool load, string content = "")
@@ -88,8 +85,10 @@ namespace ChineseGame
             //If loading load in data
             if (load == true)
             {
+                //Deserialize project data
                 List<string[]> loadData = JsonSerializer.Deserialize<List<string[]>>(content);
 
+                //Move deserialized data into variables
                 SheetTitle = loadData[0][0];
                 SheetTitleChinese = loadData[0][1];
                 WorksheetTitleInput.Text = SheetTitle;
@@ -98,6 +97,7 @@ namespace ChineseGame
                 GridSize = Int32.Parse(loadData[0][2]);
                 GridSlider.Value = GridSize;
                 
+                //Implement data into editor
                 for (int r = 1; r < loadData.Count(); r++)
                 {
                     WordData.Add(loadData[r]);
@@ -308,9 +308,6 @@ namespace ChineseGame
         }
 
         //Generate grid
-        //This function makes me physically sick
-        //If I ever have to come back to this I think I might just like
-        //Give up
         public void Generate()
         {
             //Clear old
@@ -362,7 +359,7 @@ namespace ChineseGame
                                             //Define thingos for increment dir on word check
                                             int xx = x;
                                             int yy = y;
-                                            while (true) //Yes I know this is dangerous, but I also dont remember asking
+                                            while (true) //Yes I know this is dangerous, but it works
                                             {
                                                 //Increment based on direction
                                                 switch (dir)
@@ -462,9 +459,9 @@ namespace ChineseGame
                             }
                         }
 
-                        //If not then amke sure is added
-                        //this is completely copy pasted
-                        //some real yanderedev type coding here :)
+                        //If not word added then make sure is added
+                        //This is completely copy pasted but for loops slightly altered
+                        //so it goes through every possible location left-right, top-bottom, not random
                         if (WordIncluded == false)
                         {
                             //Split word in string array
@@ -489,7 +486,7 @@ namespace ChineseGame
                                                 //Define thingos for increment dir on word check
                                                 int xx = x;
                                                 int yy = y;
-                                                while (true) //Yes I know this is dangerous, but I also dont remember asking
+                                                while (true)
                                                 {
                                                     //Increment based on direction
                                                     switch (dir)
@@ -573,6 +570,7 @@ namespace ChineseGame
                         }
                     }
                 }
+                //Increment number of loops
                 Loop++;
             }
             //Fill blank spots
